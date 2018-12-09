@@ -2,6 +2,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var cheerio = require("cheerio");
 var axios = require("axios");
+var mongoose = require("mongoose");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
