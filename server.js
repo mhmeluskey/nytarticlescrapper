@@ -10,10 +10,10 @@ var PORT = process.env.PORT || 3000;
 var db = require("./models");
 
 //ignore before publishing
-mongoose.connect(
-  "mongodb://localhost/scrapper",
-  { useNewUrlParser: true }
-);
+// mongoose.connect(
+//   "mongodb://localhost/scrapper",
+//   { useNewUrlParser: true }
+// );
 
 //works with express for template engine"
 
@@ -44,6 +44,15 @@ app.get("/scrape", function(req, res) {
         if (result.link && !$(this).attr("aria-hidden")) {
           console.log(result.link);
         }
+        db.TechArticle.create(result)
+          .then(function(dbArticle) {
+            // View the added result in the console
+            console.log(dbArticle);
+          })
+          .catch(function(err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+          });
       });
       res.render("index");
       //make route
@@ -69,8 +78,7 @@ app.get("/articles", function(req, res) {
 //   res.send("404 - not found");
 //});
 
-var MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapper";
 mongoose.connect(
   MONGODB_URI,
   { useNewUrlParser: true }
