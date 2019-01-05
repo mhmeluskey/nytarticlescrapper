@@ -1,4 +1,9 @@
-h1 {
-  color: blue;
-  background-color: yellow;
+.intro {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  background: url("newyorktimes.png") no-repeat center center fixed;
+  display: table;
+  top: 0;
+  background-size: cover;
 }
