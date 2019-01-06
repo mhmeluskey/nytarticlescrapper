@@ -3,6 +3,7 @@ var exphbs = require("express-handlebars");
 var cheerio = require("cheerio");
 var axios = require("axios");
 var mongoose = require("mongoose");
+var logger = require("morgan");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ var db = require("./models");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("port", process.env.PORT || 3000);
@@ -41,27 +43,42 @@ app.get("/scrape", function(req, res) {
         result.link = $(this)
           .find("a")
           .attr("href");
+
         if (result.link && !$(this).attr("aria-hidden")) {
           console.log(result.link);
-        }
-        db.TechArticle.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle);
+          db.TechArticle.findOneAndUpdate({ title: result.title }, result, {
+            upsert: true
           })
-          .catch(function(err) {
-            // If an error occurred, send it to the client
-            return res.json(err);
-          });
+            .then(function(dbArticle) {
+              // View the added result in the console
+              console.log(dbArticle);
+            })
+            .catch(function(err) {
+              // If an error occurred, send it to the client
+              return res.json(err);
+            });
+        }
       });
-      res.render("index");
+      res.send("scrape complete");
       //make route
     });
 });
 
+// db.collection.update(
+//   <query>,
+//   <update>,
+//   {
+//     upsert: <boolean>,
+//     multi: <boolean>,
+//     writeConcern: <document>,
+//     collation: <document>,
+//     arrayFilters: [ <filterdocument1>, ... ]
+//   }
+// )
+
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
-  db.Article.find({})
+  db.TechArticle.find({})
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
