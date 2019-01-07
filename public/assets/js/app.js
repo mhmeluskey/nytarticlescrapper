@@ -5,13 +5,20 @@ $(document).ready(function() {
     // For each one
     for (var i = 0; i < data.length; i++) {
       $(".articles").append(
-        "<p data-id='" +
+        "<div class = 'card' data-id='" +
           data[i]._id +
           "'>" +
-          data[i].title +
-          "<br />" +
+          "<h3>" +
+          "<a href ='" +
           data[i].link +
-          "</p>"
+          "'>" +
+          data[i].title +
+          "</a>" +
+          "<a class = 'btn save btn-primary' >Save Article</a>" +
+          "</h3>" +
+          // "<br />" +
+          // // data[i].link +
+          "</div>"
       );
     }
   });

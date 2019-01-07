@@ -3,7 +3,18 @@
 }
 
 .jumbotron {
-  background: url("newyorktimes.png") fixed no-repeat;
+  background: url("newyorktimes.png") no-repeat center center;
   background-size: cover;
   height: 400px;
+}
+
+.card {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.save {
+  width: 130px;
+  margin-left: 20px;
 }
