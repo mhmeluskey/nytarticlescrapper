@@ -12,6 +12,10 @@
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 3px 6px #999, 0 3px 6px #999;
+  text-align: left;
 }
 
 .save {
