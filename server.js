@@ -10,21 +10,16 @@ var PORT = process.env.PORT || 3000;
 
 var db = require("./models");
 
-//ignore before publishing
-// mongoose.connect(
-//   "mongodb://localhost/scrapper",
-//   { useNewUrlParser: true }
-// );
-
-//works with express for template engine"
+app.use(express.static("public"));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-app.use(express.static("public"));
+
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set("port", process.env.PORT || 3000);
+
+// app.set("port", process.env.PORT || 3000);
 
 app.get("/", function(req, res) {
   res.render("index");
